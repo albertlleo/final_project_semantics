@@ -31,7 +31,7 @@ for ele in dict_sentences[1]:
         if "\n"  in i:
             value.append(i)
 
-# this is a test    
+# this is a test for comit and push
 
 print(array)
 print(value)
