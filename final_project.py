@@ -31,7 +31,7 @@ for ele in dict_sentences[1]:
         if "\n"  in i:
             value.append(i)
 
-for 
+# this is a test    
 
 print(array)
 print(value)
