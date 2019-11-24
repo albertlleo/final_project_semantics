@@ -41,42 +41,72 @@ def token_type(token):
     else:
         return "word"
 pos_func = {}
-
+vvg_hold = []
+vv_hold = []
+mention_distance = {}
 def find_an(sent,text_id,s_id):
     '''Returns a list of tuples (adjective lemma, head noun lemma).'''
     olist = []
     for i in sent.nodelist:
         pos_func[i.POS] = i.func + " Parent=" + i.parent.POS
-
+        length = len(i.lemma)
+        write2 = (text_id, s_id)
+        
+        
         #what is the difference between POS and parent.POS??
-        if i.POS == 'VVG': #and i.func == 'ROOT': # TODO: begins with JJ (to account for comparatives+superlatives, with POS-tags=JJR, JJS)          
+        if i.POS == 'VVG': #and i.func == 'ROOT': # TODO: begins with JJ (to account for comparatives+superlatives, with POS-tags=JJR, JJS)            
             if i.parent.lemma == 'start' or i.parent.lemma == 'hate':
-                write = (text_id + s_id)
+                word = (i.lemma, write2)
+                vvg_hold.append(word)
+                write = (write2, i.parent.lemma + "," + i.POS + "," + i.lemma + "," + "|1", length)
                 filter1.append(write)
-                write = (i.parent.lemma + "," + i.POS + "," + i.lemma + "," + "|1")
-                filter1.append(write)
-                
 #                print(write)
         elif i.POS == 'VV':
-            if i.parent.lemma == 'start' or i.parent.lemma == 'hate':
-                write = (i.parent.lemma + "," + i.POS + "," + i.lemma + "," + "|0")
+            
+            
+            if i.parent.lemma == 'start' or i.parent.lemma == 'hate':  
+#                for j in range(0,len(sent.nodelist) - 1):
+#                        if i.lemma == (i - j).lemma:
+#                            print("XXX")
+                write2 = (text_id, s_id)
+                write = (write2, i.parent.lemma + "," + i.POS + "," + i.lemma + "," + "|0", length)
                 filter1.append(write)
                 #print(str(sent))
                 #print "\t*** " + i.form + '-' + i.parent.form
                 tup = (i.lemma, i.parent.lemma)
-                olist.append(tup) # for multiple occurrences of AN
+                olist.append(tup)
+        else:
+            word = (i.lemma, write2)
+            vv_hold.append(word)
+            
+        # for multiple occurrences of AN
 # example: 'financial' in the following structure: ###TODO: check other examples of 'coord' to see if they receive the same structure
 #practical       practical       JJ      7       10      NMOD
 #and     and     CC      8       7       CC
 #financial       financial       JJ      9       7       COORD
 #support support NN      10      13      NMOD
-        elif i.POS == 'VBZ' and i.func == 'COORD':
-            if i.parent.parent.POS == 'VBB':
-                tup = (i.lemma, i.parent.parent.lemma)
-                olist.append(tup)
-    return olist
+    return olist, vvg_hold, vv_hold
 
-
+def find_mention(vvg_hold, vv_hold):
+    for j in range(0,len(vvg_hold)):
+        for k in range(0, len(vv_hold)):
+            if vvg_hold[j][0] == vv_hold[k][0]:
+                if vvg_hold[j][1][1] >= vv_hold[k][1][1]:
+                    if vvg_hold[j][1][0] == vv_hold[k][1][0]:
+                        value = abs(vvg_hold[j][1][1] - vv_hold[k][1][1])
+                        lemma = vvg_hold[j][0]
+                        mention_distance[lemma] = value
+                        will_print = (mention_distance, lemma)
+#                    print(vvg_hold[j][0], "=", min(mention_distance))
+    return [will_print]
+    
+    
+#    for j in range(1,len(vvg_hold)):
+#        for k in range(0, len(vvg_hold) - j):
+#            if vvg_hold[j-1][0] == vv_hold[j-1+k][0]: #or vvg_hold[j-1][0] == vv_hold[j-1+k][0]:
+#                if vvg_hold[j-1][1][0] == vv_hold[j-1-k][1][0]:
+#                    print(abs(vvg_hold[j-1][1][1] - vv_hold[j-1-k][1][1]))
+                
 #this function check if the node is in the list of tuples or not
 def isNodeInList(n):
     for p in listTup:
@@ -103,7 +133,7 @@ def process_bnc_mod():
     within_sent = False
     limit = 1000000#124529467 number of tokens in bnc.xml plus two
     #limit = 1000000
-    bnc = open(home + 'bnc.xml', 'r')
+    bnc = open(home + 'bnc.xml', 'r', encoding = 'UTF-8', errors = 'ignore')
     while i < limit:
 #        if(i%25000 == 0) and (i != 0):
 #            print("Processed " + str(i) + " lines")
@@ -129,7 +159,7 @@ def process_bnc_mod():
             except:
                 msg = iamin + str(newsent) + "\n"
                 sys.stderr.write(msg)
-            anlist = find_an(newsent,text_id,s_id) # returns list with a and n
+            anlist, vvg_hold, vv_hold = find_an(newsent,text_id,s_id) # returns list with a and n
             for tupla in anlist:
                 checkList(tupla)
             del(newsent)
@@ -146,6 +176,7 @@ def process_bnc_mod():
         elif token_type(line) == False:
             sys.stderr.write("* Reached EOF *\n")
             break
+        
     bnc.close()
     msg = "Done! Number of sentences processed: " + str(s_id) + ", and tokens: " + str(i) + "\n"
     sys.stderr.write(msg)
@@ -154,7 +185,7 @@ def process_bnc_mod():
 ### main ###
 
 ### global variables
-home = '/Users/hmtkv/Google Drive/Yeni/UPF/Classes!/Comp Sem/Project/data/'
+home = 'C:/Users/u175213/Desktop/'
 #dropbox = home + 'Dropbox/distsem/'
 #nounlistfile = dropbox + 'data/head_nouns/nounswithcolouradjs.txt'
 csvfile = home + 'output.csv'
@@ -185,6 +216,7 @@ for el in listTup:
 
 csv1_data = home + 'sample_data.csv'
 csv2_data = home + 'filtered.csv'
+csv3_data = home + 'distance.csv'
 #1-------------------------------------
 #pof.flush()
 #for lines in final_list:
@@ -200,6 +232,11 @@ df.to_csv(csv1_data, sep=',',index=False)
 
 df2 = pd.DataFrame(filter1)
 df2.to_csv(csv2_data, sep=',',index=False)
+
+will_print = find_mention(vvg_hold, vv_hold)
+
+df3 = pd.DataFrame(will_print)
+df3.to_csv(csv3_data, sep=',',index=False)
 
 b = datetime.now()
 
