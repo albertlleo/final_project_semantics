@@ -19,6 +19,7 @@ import pandas as pd
 #from classes4bnc import *# import defined classes (same namespace!)
 ### from generalfuncs import *
 final_list = []
+filter1 = []
 ### functions ###
 def yield_lines(list_line):
     
@@ -45,11 +46,17 @@ def find_an(sent):
     '''Returns a list of tuples (adjective lemma, head noun lemma).'''
     olist = []
     for i in sent.nodelist:
-        pos_func[i.POS] = i.func + "Parent=" + i.parent.POS
+        pos_func[i.POS] = i.func + " Parent=" + i.parent.POS
+
         #what is the difference between POS and parent.POS??
-        if i.POS == 'JJ' and i.func == 'ROOT': # TODO: begins with JJ (to account for comparatives+superlatives, with POS-tags=JJR, JJS)
-            
-            if i.parent.POS == 'VBB':
+        if i.POS == 'VVG': #and i.func == 'ROOT': # TODO: begins with JJ (to account for comparatives+superlatives, with POS-tags=JJR, JJS)          
+            if i.parent.lemma == 'start':
+                write = (i.parent.lemma + "," + i.POS + "," + i.lemma + "," + "|1")
+                filter1.append(write)
+        elif i.POS == 'VV':
+            if i.parent.lemma == 'start':
+                write = (i.parent.lemma + "," + i.POS + "," + i.lemma + "," + "|0")
+                filter1.append(write)
                 #print(str(sent))
                 #print "\t*** " + i.form + '-' + i.parent.form
                 tup = (i.lemma, i.parent.lemma)
@@ -89,14 +96,14 @@ def process_bnc_mod():
     i = 0
     s_id = 0
     within_sent = False
-    limit = 10000#124529467 number of tokens in bnc.xml plus two
+    limit = 1000000#124529467 number of tokens in bnc.xml plus two
     #limit = 1000000
     bnc = open(home + 'bnc.xml', 'r')
     while i < limit:
-        if(i%25000 == 0) and (i != 0):
-            print("Processed " + str(i) + " lines")
-        if(i%1245294 == 0):
-            print("Processed " + str(i) + " from " + str(limit) + " lines, (" + str((i/limit)*100) + "%)")
+#        if(i%25000 == 0) and (i != 0):
+#            print("Processed " + str(i) + " lines")
+#        if(i%1245294 == 0):
+#            print("Processed " + str(i) + " from " + str(limit) + " lines, (" + str((i/limit)*100) + "%)")
         i = i + 1
         iamin = "token: " + str(i)+ "\n\t"
         line = bnc.readline()
@@ -164,11 +171,12 @@ of.write(text)
 for el in listTup:
     if(el.getNum() >= minfreq):
        #tam sayıyı aldırma => str(el)[-2:]
-        print(str(el) + " appears " + str(el).split(";")[1] + " times(min frequency=", minfreq,")it's added to the output list")
+        #print(str(el) + " appears " + str(el).split(";")[1] + " times(min frequency=", minfreq,")it's added to the output list")
         info = str(el)
         of.write(info +"\n")
 
-csv_data = home + 'sample_data.csv'
+csv1_data = home + 'sample_data.csv'
+csv2_data = home + 'filtered.csv'
 #1-------------------------------------
 #pof.flush()
 #for lines in final_list:
@@ -180,10 +188,10 @@ csv_data = home + 'sample_data.csv'
 
 #2-------------------------------------
 df = pd.DataFrame(final_list)
-df.to_csv(csv_data, sep=',',index=False)
+df.to_csv(csv1_data, sep=',',index=False)
 
-    
-
+df2 = pd.DataFrame(filter1)
+df2.to_csv(csv2_data, sep=',',index=False)
 
 b = datetime.now()
 
