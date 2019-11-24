@@ -42,7 +42,7 @@ def token_type(token):
         return "word"
 pos_func = {}
 
-def find_an(sent):
+def find_an(sent,text_id,s_id):
     '''Returns a list of tuples (adjective lemma, head noun lemma).'''
     olist = []
     for i in sent.nodelist:
@@ -50,11 +50,15 @@ def find_an(sent):
 
         #what is the difference between POS and parent.POS??
         if i.POS == 'VVG': #and i.func == 'ROOT': # TODO: begins with JJ (to account for comparatives+superlatives, with POS-tags=JJR, JJS)          
-            if i.parent.lemma == 'start':
+            if i.parent.lemma == 'start' or i.parent.lemma == 'hate':
+                write = (text_id + s_id)
+                filter1.append(write)
                 write = (i.parent.lemma + "," + i.POS + "," + i.lemma + "," + "|1")
                 filter1.append(write)
+                
+#                print(write)
         elif i.POS == 'VV':
-            if i.parent.lemma == 'start':
+            if i.parent.lemma == 'start' or i.parent.lemma == 'hate':
                 write = (i.parent.lemma + "," + i.POS + "," + i.lemma + "," + "|0")
                 filter1.append(write)
                 #print(str(sent))
@@ -93,6 +97,7 @@ def checkList(act):
         #print(listTup[num].tup[0]+ "-" +  listTup[num].tup[1] + " has been found for the first time")
 
 def process_bnc_mod():
+    text_id = 0
     i = 0
     s_id = 0
     within_sent = False
@@ -107,6 +112,9 @@ def process_bnc_mod():
         i = i + 1
         iamin = "token: " + str(i)+ "\n\t"
         line = bnc.readline()
+        if token_type(line) == "textend": # text starts
+            text_id += 1
+            print(text_id)
         if token_type(line) == "sentencebegin": # count sentences
             if within_sent == True: # errors in the corpus coding...
                 pass
@@ -121,7 +129,7 @@ def process_bnc_mod():
             except:
                 msg = iamin + str(newsent) + "\n"
                 sys.stderr.write(msg)
-            anlist = find_an(newsent) # returns list with a and n
+            anlist = find_an(newsent,text_id,s_id) # returns list with a and n
             for tupla in anlist:
                 checkList(tupla)
             del(newsent)
