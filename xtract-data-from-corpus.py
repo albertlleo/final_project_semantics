@@ -16,10 +16,10 @@ import sys
 from datetime import datetime
 from classes4bnc import Pair, Node, Sentence 
 import pandas as pd
+import numpy as np
 #from classes4bnc import *# import defined classes (same namespace!)
 ### from generalfuncs import *
-final_list = []
-filter1 = []
+
 ### functions ###
 def yield_lines(list_line):
     
@@ -44,6 +44,9 @@ pos_func = {}
 vvg_hold = []
 vv_hold = []
 mention_distance = {}
+final_list = []
+filter1 = {}
+
 def find_an(sent,text_id,s_id):
     '''Returns a list of tuples (adjective lemma, head noun lemma).'''
     olist = []
@@ -52,29 +55,21 @@ def find_an(sent,text_id,s_id):
         length = len(i.lemma)
         write2 = (text_id, s_id)
         
-        
-        #what is the difference between POS and parent.POS??
-        if i.POS == 'VVG': #and i.func == 'ROOT': # TODO: begins with JJ (to account for comparatives+superlatives, with POS-tags=JJR, JJS)            
+        if i.POS == 'VVG': #
             if i.parent.lemma == 'start' or i.parent.lemma == 'hate':
                 word = (i.lemma, write2)
                 vvg_hold.append(word)
-                write = (write2, i.parent.lemma + "," + i.POS + "," + i.lemma + "," + "|1", length)
-                filter1.append(write)
-#                print(write)
-        elif i.POS == 'VV':
-            
-            
+                
+                #write = (write2, i.parent.lemma + "," + i.POS + "," + i.lemma + "," + "|1", length)
+                tup = (i.POS, length)
+                filter1[i.lemma] = tup
+
+        elif i.POS == 'VV':        
             if i.parent.lemma == 'start' or i.parent.lemma == 'hate':  
-#                for j in range(0,len(sent.nodelist) - 1):
-#                        if i.lemma == (i - j).lemma:
-#                            print("XXX")
-                write2 = (text_id, s_id)
-                write = (write2, i.parent.lemma + "," + i.POS + "," + i.lemma + "," + "|0", length)
-                filter1.append(write)
-                #print(str(sent))
-                #print "\t*** " + i.form + '-' + i.parent.form
-                tup = (i.lemma, i.parent.lemma)
-                olist.append(tup)
+                #sadece fiiller için?
+                #write = (write2, i.parent.lemma + "," + i.POS + "," + i.lemma + "," + "|0", length)
+                tup = (i.POS, length)
+                filter1[i.lemma] = tup
         else:
             word = (i.lemma, write2)
             vv_hold.append(word)
@@ -85,20 +80,49 @@ def find_an(sent,text_id,s_id):
 #and     and     CC      8       7       CC
 #financial       financial       JJ      9       7       COORD
 #support support NN      10      13      NMOD
-    return olist, vvg_hold, vv_hold
+    return filter1, vvg_hold, vv_hold
 
 def find_mention(vvg_hold, vv_hold):
+    lemma_lst = []
+    distance_lst = []
+    sentence_id_lst = []
+    text_id_lst = []
+#    smart_distance = 0
+
+    min_distance = 500 
     for j in range(0,len(vvg_hold)):
+        smart_distance = 100
         for k in range(0, len(vv_hold)):
-            if vvg_hold[j][0] == vv_hold[k][0]:
-                if vvg_hold[j][1][1] >= vv_hold[k][1][1]:
-                    if vvg_hold[j][1][0] == vv_hold[k][1][0]:
-                        value = abs(vvg_hold[j][1][1] - vv_hold[k][1][1])
+            #min_distance = 500    
+            if vvg_hold[j][0] == vv_hold[k][0]:                         #compare lemma               
+                if vvg_hold[j][1][1] >= vv_hold[k][1][1]:               #compare sentence_id
+                    if vvg_hold[j][1][0] == vv_hold[k][1][0]:           #compare text id
+                        distance = abs(vvg_hold[j][1][1] - vv_hold[k][1][1]) #distance                   
                         lemma = vvg_hold[j][0]
-                        mention_distance[lemma] = value
-                        will_print = (mention_distance, lemma)
-#                    print(vvg_hold[j][0], "=", min(mention_distance))
-    return [will_print]
+                        sentence_id = vvg_hold[j][1][1]
+                        text_id = vvg_hold[j][1][0]
+                        
+                        distance_lst.append(distance)
+                        lemma_lst.append(lemma)
+                        sentence_id_lst.append(sentence_id)
+                        text_id_lst.append(text_id)
+                        
+                        df_final = pd.DataFrame(np.column_stack([lemma_lst, distance_lst, text_id_lst, sentence_id_lst]), 
+                               columns=['Lemma', 'Distance', 'Text ID', 'Sentence ID'])
+                        
+#                        mention_distance[lemma] = min(distance_lst)
+#                        if distance < min_distance:
+#                        if smart_distance == 0: 
+#                            smart_distance = distance                             
+#                            mention_distance[lemma] = min(distance_lst)  
+                        if distance < smart_distance:
+                            smart_distance = distance                             
+                            mention_distance[lemma] = smart_distance  
+#                        df_final = pd.DataFrame(distance_lst)
+#                        df_final.iloc[2] = vv_hold[k][1][1]
+#                        df_final.iloc[3] = vv_hold[k][1][0]
+#                        
+    return mention_distance
     
     
 #    for j in range(1,len(vvg_hold)):
@@ -185,8 +209,8 @@ def process_bnc_mod():
 ### main ###
 
 ### global variables
-home = 'C:/Users/u175213/Desktop/'
-#dropbox = home + 'Dropbox/distsem/'
+home = 'C:/Users/hmtkv/Google Drive/Yeni/UPF/Classes!/Comp Sem/Project/data/'
+#dropbox = home + Dropbox/distsem/'
 #nounlistfile = dropbox + 'data/head_nouns/nounswithcolouradjs.txt'
 csvfile = home + 'output.csv'
 
@@ -216,7 +240,7 @@ for el in listTup:
 
 csv1_data = home + 'sample_data.csv'
 csv2_data = home + 'filtered.csv'
-csv3_data = home + 'distance.csv'
+csv3_data = home + 'features.csv'
 #1-------------------------------------
 #pof.flush()
 #for lines in final_list:
@@ -233,10 +257,18 @@ df.to_csv(csv1_data, sep=',',index=False)
 df2 = pd.DataFrame(filter1)
 df2.to_csv(csv2_data, sep=',',index=False)
 
-will_print = find_mention(vvg_hold, vv_hold)
+df_final = find_mention(vvg_hold, vv_hold)
 
-df3 = pd.DataFrame(will_print)
-df3.to_csv(csv3_data, sep=',',index=False)
+
+
+output = pd.DataFrame()
+output = output.append(list(filter1.items()), ignore_index=True)
+newrows = output.columns
+output[2]= output[0].map(mention_distance)
+
+
+output.to_csv(csv3_data, sep=',',index=False)
+
 
 b = datetime.now()
 
@@ -246,4 +278,3 @@ c = b - a
 print("Time spent (sec):" + str(c.seconds))
 print(csvfile + " created!")
 print("[End]")
-
