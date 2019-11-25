@@ -265,7 +265,7 @@ output = pd.DataFrame()
 output = output.append(list(filter1.items()), ignore_index=True)
 newrows = output.columns
 output[2]= output[0].map(mention_distance)
-
+output.columns = {"Lemma", "POS,Lengh", "Mention Distance",}
 
 output.to_csv(csv3_data, sep=',',index=False)
 
