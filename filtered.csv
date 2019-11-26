@@ -1,4 +1,4 @@
-0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15
+text_id,sent_id,finite_verb,non_finite_verb,length,befaft_bef,befaft_aft,argstr_NC,argstr_NP,argstr_PP,tense_pre,tense_pst,tense_fut,tense_cond,verb_POS,target_form
 3,2147,start,flow,4,0,0,0,0,1,0,0,1,0,VVG,1
 4,3128,hate,kick,4,0,1,0,1,0,1,0,0,0,VVG,1
 4,3262,start,write,5,0,0,1,0,0,1,0,0,0,VVG,1
