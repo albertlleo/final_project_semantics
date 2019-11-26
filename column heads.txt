@@ -1,0 +1,3 @@
+If you  need the heads of the columns (I think the names are quite straightforward!!!)
+
+text_id,sent_id,finite_verb,non_finite_verb,length,befaft_bef,befaft_aft,argstr_NC,argstr_NP,argstr_PP,tense_pre,tense_pst,tense_fut,tense_cond,verb_POS,target_form
