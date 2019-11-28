@@ -1,17 +1,17 @@
-0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16
+text_id,sent_id,finite_verb,non_finite_verb,sentence,length,befaft_bef,befaft_aft,argstr_NC,argstr_NP,argstr_PP,tense_pre,tense_pst,tense_fut,tense_cond,verb_POS,target_form
 3,2147,start,flow," If de Klerk can convince the world that South Africa has come far enough in improving its record on human rights , sanctions will be lifted and crucial foreign capital will start flowing into the country .",4,0,0,0,0,1,0,0,1,0,VVG,1
 4,3128,hate,kick," But we can say nothing to these things you know Jackson , we must jog on and be content with the jingling of the bells , only d -- it , I hate a dust , and kicking up a dust , and being confined in harness while others ride in the waggon , under cover , stretching their legs in the straw at ease , and gazing at green trees and blue skies without half my Taste .",4,0,1,0,1,0,1,0,0,0,VVG,1
-4,3262,start,write," More than a hundred years have passed since Morelli started writing ; in that time many problems of authorship have been solved , while about others tacit agreement has been reached .",5,0,0,1,0,0,1,0,0,0,VVG,1
+4,3262,start,write," More than a hundred years have passed since Morelli started writing ; in that time many problems of authorship have been solved , while about others tacit agreement has been reached .",5,0,0,1,0,0,0,1,0,0,VVG,1
 5,4662,start,come," Born in 1932 , he retired as a foreign correspondent for the Polish Press Agency in 1981 , by which time his three books had started to come out .",4,0,0,1,0,0,0,1,0,0,VV,0
 5,4941,hate,hear," Here and elsewhere , the method , for all that Amis would hate to hear it , is dialectical .",4,0,0,1,0,0,1,0,0,0,VV,0
 6,5641,start,think, In the first place you will start to think about how an actor 's work differs according to the demands of the medium .,5,0,0,1,0,0,0,0,1,0,VV,0
 6,7277,hate,see, I hated seeing myself at first -- we all did .,3,0,0,0,0,1,0,1,0,0,VVG,1
-6,7934,start,act, When did you start acting ?,3,0,0,1,0,0,0,1,0,0,VVG,1
+6,7934,start,act, When did you start acting ?,3,0,0,1,0,0,1,0,0,0,VVG,1
 8,9543,start,transcribe," Goldberg , images of their last meeting in the narrow entrance of the elegant little Scottish National Gallery of Modern Art dancing in his head , slipped a sheet of A4 into his old Olivetti portable and started to transcribe .",10,0,0,1,0,0,0,1,0,0,VV,0
-8,10005,start,go," I need to move slowly across from the left and see where things start to go wrong , he wrote .",2,0,1,1,0,0,0,1,0,0,VV,0
-8,10726,start,play, Marcus leaps out of bed and starts to play Victorian hymns on the little portable organ he has in his bedroom .,4,1,0,0,1,0,1,0,0,0,VV,0
+8,10005,start,go," I need to move slowly across from the left and see where things start to go wrong , he wrote .",2,0,1,1,0,0,1,0,0,0,VV,0
+8,10726,start,play, Marcus leaps out of bed and starts to play Victorian hymns on the little portable organ he has in his bedroom .,4,0,0,0,1,0,1,0,0,0,VV,0
 8,10727,start,echo, Whole house starts to echo with the booming sound .,4,0,0,0,0,1,1,0,0,0,VV,0
-8,10730,start,distort," Sometimes plays straight , sometimes starts to distort , hardly perceptible at first , then more and more , until he is producing wild expressionist shrieks or light medieval dances , then gradually the hymn reasserts itself until all is as it should be .",7,1,0,0,0,1,1,0,0,0,VV,0
+8,10730,start,distort," Sometimes plays straight , sometimes starts to distort , hardly perceptible at first , then more and more , until he is producing wild expressionist shrieks or light medieval dances , then gradually the hymn reasserts itself until all is as it should be .",7,0,0,0,0,1,1,0,0,0,VV,0
 8,10765,start,hear, I start to hear everything much better than I normally do .,4,0,1,0,1,0,1,0,0,0,VV,0
 8,11479,start,make, Two years since I set up the glass and started to make marks on it .,4,0,1,0,1,0,0,1,0,0,VV,0
 8,11817,start,make," Starting to make bachelor apparatus interesting again , as I hoped it might .",4,0,1,1,0,0,1,0,0,0,VV,0
@@ -28,16 +28,16 @@
 11,15029,start,rise, Set menus start at 57 and rise sharply to about 150 150 la carte .,4,0,0,1,0,0,1,0,0,0,VV,0
 11,15107,start,handle, About midnight she started handling interviews .,6,0,1,0,1,0,0,1,0,0,VVG,1
 12,15633,start,read," "" Dratted nuisance that Quince lad ! "" thought Bramble , and started to read the paper .",4,0,1,0,1,0,0,1,0,0,VV,0
-12,15893,start,descend," The small bi-plane wobbled over the oaks and the elms , banked at the north end of the ha-ha and started to descend towards the huge lawn which ran , treeless along this side of the house between terrace and park .",7,0,0,0,0,1,0,0,0,0,VV,0
+12,15893,start,descend," The small bi-plane wobbled over the oaks and the elms , banked at the north end of the ha-ha and started to descend towards the huge lawn which ran , treeless along this side of the house between terrace and park .",7,0,0,0,0,1,0,1,0,0,VV,0
 12,16829,start,talk, I was going to tell my joke to the nice German but he had started talking to someone else .,4,0,0,1,0,0,0,1,0,0,VVG,1
-12,17398,start,stir," "" The gentleman who 'd been in with her would naturally have gone back to his room well before people started stirring . """,4,0,0,1,0,0,0,0,0,1,VVG,1
+12,17398,start,stir," "" The gentleman who 'd been in with her would naturally have gone back to his room well before people started stirring . """,4,0,0,1,0,0,0,1,0,0,VVG,1
 12,17585,start,put," If she started to put pressure on ... """,3,0,1,0,1,0,0,1,0,0,VV,0
 14,19189,start,think, I now had to start thinking about things like that .,5,0,0,0,0,1,0,1,0,0,VVG,1
 14,19195,start,feel, I was starting to feel light-headed .,4,0,1,1,0,0,0,1,0,0,VV,0
 14,19282,start,walk," He started to walk towards us , then he hesitated .",4,0,0,0,0,1,0,1,0,0,VV,0
-14,19341,start,ask," I remember the shock of realizing that this was my last ever second-year class , then my last ever third-year class , and then people started asking me about my leaving party .",3,0,0,0,0,1,1,0,0,0,VVG,1
+14,19341,start,ask," I remember the shock of realizing that this was my last ever second-year class , then my last ever third-year class , and then people started asking me about my leaving party .",3,0,0,0,0,1,0,1,0,0,VVG,1
 14,19398,start,realize," I had also never before been without a pattern to the future , and I was starting to realize that it might not all be quite so easy as I had imagined .",7,0,0,1,0,0,0,1,0,0,VV,0
-14,19405,start,run," And , somehow , my savings , carefully built up over the years , were starting to run dry .",3,0,1,1,0,0,0,0,0,0,VV,0
+14,19405,start,run," And , somehow , my savings , carefully built up over the years , were starting to run dry .",3,0,1,1,0,0,0,1,0,0,VV,0
 14,19550,start,invite, Some of them tried to make amends for their own earlier contribution to this state of affairs and moved to include me more fully in the life of the school -- a few even started to invite me back home for meals and things .,6,0,0,0,0,1,0,1,0,0,VV,0
 14,19596,start,appear, Mona graffiti started to appear everywhere and the craze was fuelled by my own furious reaction whenever I discovered some new example of the genre .,6,0,0,1,0,0,0,1,0,0,VV,0
 14,19689,start,laugh, All of a sudden I started to laugh .,5,0,0,1,0,0,0,1,0,0,VV,0
@@ -48,18 +48,18 @@
 14,19974,start,cry," I made my way up to the lobby with those final two words of hers ringing around inside my head , and all sorts of other doctor phrases started to enter my mind -- people calling me Doctor Streeter , popular songs with the word doctor in them -- and then all of a sudden I started to cry .",3,0,0,1,0,0,0,1,0,0,VV,0
 14,19997,start,come," However , although unemployment was starting to come down , especially in the south-east where I was living , it was still generally pretty high .",4,0,0,0,0,1,0,1,0,0,VV,0
 14,20158,start,rain, It started to rain so I went down to Apsley House at the bottom right-hand corner of the park with the intention of having a look at the paintings there .,4,0,0,1,0,0,0,1,0,0,VV,0
-14,20247,start,run, She fell silent and a tear started to run down her cheek .,3,1,0,0,1,0,0,1,0,0,VV,0
+14,20247,start,run, She fell silent and a tear started to run down her cheek .,3,0,0,0,1,0,0,1,0,0,VV,0
 14,20285,start,lose," I see now that finally , critically , and most insidiously of all , I had started to lose my self-respect .",4,0,1,0,1,0,1,0,0,0,VV,0
 14,20365,start,think," I was so caught up in what I was seeing that it was only when I reached the top of the close where they lived that I started to think again about what I was doing there , and it was then that my feelings of fear started .",5,0,0,0,0,1,0,1,0,0,VV,0
 14,20381,start,take, A new plan of action started to take shape .,4,0,1,0,1,0,0,1,0,0,VV,0
 14,20494,start,dissipate," The excitement of the adventure started to dissipate and I was left with the cold reality of knowing that I was on a train with hardly any money , no ticket and nowhere to go .",9,0,0,1,0,0,0,1,0,0,VV,0
 14,20497,start,look," It was starting to look as though , whether I liked it or not , I simply might not survive .",4,0,0,1,0,0,0,1,0,0,VV,0
 14,20524,start,look, He went away and I started to look down at my hands again .,4,0,0,0,0,1,0,1,0,0,VV,0
-14,20679,start,wind," The catering assistants started to wind down the evening 's proceedings , and Katrina and one of the other girls ( Bridget ) came out from around the back to tidy up the customer area .",4,1,0,0,1,0,0,1,0,0,VV,0
+14,20679,start,wind," The catering assistants started to wind down the evening 's proceedings , and Katrina and one of the other girls ( Bridget ) came out from around the back to tidy up the customer area .",4,0,0,0,1,0,0,1,0,0,VV,0
 14,20749,start,wash, Waves of sleep then started to wash over me and I dozed fitfully until dawn .,4,0,0,0,0,1,0,1,0,0,VV,0
-14,21102,start,like," Funnily enough , I was starting to like the idea .",4,1,0,0,1,0,0,1,0,0,VV,0
+14,21102,start,like," Funnily enough , I was starting to like the idea .",4,0,0,0,1,0,0,1,0,0,VV,0
 14,21135,start,clear," You can start work now , clearing this out .",5,0,0,1,0,0,1,0,0,0,VVG,1
-14,21162,start,sort," Up in London , I started to sort out various logistical problems .",4,1,0,0,1,0,0,0,0,0,VV,0
+14,21162,start,sort," Up in London , I started to sort out various logistical problems .",4,0,0,0,1,0,0,1,0,0,VV,0
 14,21233,start,move," "" Dot , I think things are finally going to start moving forward .",4,0,0,1,0,0,1,0,0,0,VVG,1
 14,21312,start,feel, I had started to feel very tired and I decided to try and find somewhere to have a sleep .,4,0,1,1,0,0,0,1,0,0,VV,0
 14,21329,start,haunt, Memories started to haunt me again .,5,0,0,1,0,0,0,1,0,0,VV,0
@@ -84,13 +84,13 @@
 15,22645,start,appear, At about 1.40pm cars started to appear and people were seen walking up the road .,6,0,0,1,0,0,0,1,0,0,VV,0
 15,22647,start,overflow, At 2.45 the car park started overflowing into neighbours ' drives .,8,0,0,0,0,1,0,1,0,0,VVG,1
 15,22848,start,think," Even before autumn sets in , gardeners start thinking about spring and putting in bulbs for next year",5,0,0,0,0,1,1,0,0,0,VVG,1
-15,22855,start,sow, In mild areas and on light soils start sowing hardy annuals .,3,1,0,0,1,0,1,0,0,0,VVG,1
+15,22855,start,sow, In mild areas and on light soils start sowing hardy annuals .,3,0,0,0,1,0,1,0,0,0,VVG,1
 15,22900,start,take, Now is the time to start taking cuttings of miniature roses .,4,0,1,0,1,0,1,0,0,0,VVG,1
 15,22931,start,grow, Mowing can usually be done less regularly during September as the grass starts to grow at a slower rate .,4,0,0,0,0,1,1,0,0,0,VV,0
-15,23172,start,bend, Be ready with thin canes to support hyacinth blooms in particular if they start to bend and droop under their own weight .,4,0,0,1,0,0,0,0,0,0,VV,0
+15,23172,start,bend, Be ready with thin canes to support hyacinth blooms in particular if they start to bend and droop under their own weight .,4,0,0,1,0,0,1,0,0,0,VV,0
 15,24009,start,collect, Start collecting our superb free Gardeners ' Manual and month by month it will build into a reference book you will turn to time and time again .,7,0,0,1,0,0,1,0,0,0,VVG,1
 15,24151,start,take," So in this type of garden you 'll need to be doubly vigilant , first ensuring that you keep the soil well fed and watered , then keeping a constant umpiring eye open to make sure that one plant is not starting to take unfair advantage of another .",4,0,1,0,1,0,0,1,0,0,VV,0
-15,24368,start,look," Although it can be very tempting to splash out on the first splendid specimen that catches your eye , you might be surprised at what you can find once you really start looking .",4,0,0,1,0,0,0,1,0,0,VVG,1
+15,24368,start,look," Although it can be very tempting to splash out on the first splendid specimen that catches your eye , you might be surprised at what you can find once you really start looking .",4,0,0,1,0,0,1,0,0,0,VVG,1
 15,24446,start,lay," Up in cooler Scottish climes it 's time to start planning for winter and laying good foundations for next year 's displays , says Sid Robertson",3,0,1,0,1,0,1,0,0,0,VVG,1
 15,24659,start,include," Details are in our Television and Radio Guide , starting on p95 , including their phone-in numbers .",7,0,1,0,1,0,1,0,0,0,VVG,1
 15,25034,start,flower," From April , when spring bulbs , shrubs and herbaceous plants start flowering in earnest , until the summer bedding is dismantled in late September , there should be no problem keeping the garden filled with colour .",6,0,0,0,0,1,1,0,0,0,VVG,1
@@ -104,36 +104,36 @@
 16,25674,start,go," This situation can be prevented by being prepared to release immediately if things start to go wrong , or by being ready to stop the wing coming up suddenly .",2,0,1,0,0,1,1,0,0,0,VV,0
 16,25739,start,swing," Thus hard braking should be avoided , particularly if the glider has started to swing .",5,0,0,1,0,0,0,1,0,0,VV,0
 16,25811,start,ascend," Of course , there is a small increase in speed as the climb gets steeper , both because the glider is starting to ascend the arc of a circle and also because of the effects of the wind gradient .",6,0,1,0,1,0,1,0,0,0,VV,0
-16,25892,start,gain," If this happens he will change the angle of climb automatically as the glider starts to gain height , and he will continue to pull it higher for a few seconds even if a power failure has occurred .",4,0,1,0,1,0,0,0,1,0,VV,0
-16,26098,start,fall, Usually this is because they got ready before the rain started falling and are unable to see that they are not going to stay up unless they wait until the shower has passed .,4,0,0,1,0,0,1,0,0,0,VVG,1
+16,25892,start,gain," If this happens he will change the angle of climb automatically as the glider starts to gain height , and he will continue to pull it higher for a few seconds even if a power failure has occurred .",4,0,1,0,1,0,1,0,0,0,VV,0
+16,26098,start,fall, Usually this is because they got ready before the rain started falling and are unable to see that they are not going to stay up unless they wait until the shower has passed .,4,0,0,1,0,0,0,1,0,0,VVG,1
 16,26205,start,keep," Start to circle in a normal turn with about 20 of bank , keeping the yaw string exactly in the middle while you reduce speed very gradually .",4,0,0,1,0,0,1,0,0,0,VVG,1
 16,26278,start,work," If you give yourself a shake , change your seating position slightly , open the clear vision panel for some fresh air , change hands on the stick for a few moments and have a sweet or drink , you can snap out of it and start to work normally again .",4,0,0,1,0,0,1,0,0,0,VV,0
 16,26307,start,get," However , during training , decisions such as when to leave the lift and start to get back to the field are too often taken by the instructor .",3,0,0,1,0,0,1,0,0,0,VV,0
 16,26310,start,look," Obviously if you are flying over a bad area , with very few good sized fields , it is necessary to divert towards the best area within range and to start looking seriously for a field at several thousand feet .",4,0,0,0,0,1,1,0,0,0,VVG,1
-16,26444,start,straighten," Pilots should be encouraged to make an assessment during the final turn of how much airbrake they will need as they start to straighten up for the final approach , instead of waiting until the turn is completed at which point it is already too late .",10,0,0,0,0,1,0,1,0,0,VV,0
+16,26444,start,straighten," Pilots should be encouraged to make an assessment during the final turn of how much airbrake they will need as they start to straighten up for the final approach , instead of waiting until the turn is completed at which point it is already too late .",10,0,0,0,0,1,1,0,0,0,VV,0
 16,26522,start,climb," If the towplane gains speed by flying close to the ground , when it noses up to start climbing , the effect of the wind gradient accentuates the climb so that the glider may easily be left flying close to the ground , in or near the wake and below the tug .",5,0,0,1,0,0,1,0,0,0,VVG,1
-16,26546,start,climb, Be ready to ease up to stay in position as the tug starts to climb .,5,0,0,1,0,0,0,0,0,0,VV,0
+16,26546,start,climb, Be ready to ease up to stay in position as the tug starts to climb .,5,0,0,1,0,0,1,0,0,0,VV,0
 16,26553,start,descend," Everyone is aware of the sensation experienced in a lift as it starts to descend , and in a car when it goes over a humped-back bridge .",7,0,0,1,0,0,1,0,0,0,VV,0
 16,26726,start,fall," When the weather is showery , there is always a grave risk of the cloud base lowering to only a few hundred feet , and this can happen within minutes of the rain starting to fall .",4,0,0,1,0,0,1,0,0,0,VV,0
 16,26769,start,fly, This is when the pilots who have been hibernating during the winter months get their gliders out and start flying again .,3,0,0,1,0,0,1,0,0,0,VVG,1
 16,26868,start,side-slip," In a field landing , or whenever you are trying for a spot landing ( which , of course , should be on every landing ) , the moment you find that you are having to keep full airbrake on continuously , you should start to side-slip and use up the excess height .",9,0,0,1,0,0,0,1,0,0,VV,0
-16,26913,start,look," If you are aiming to go back for a landing , only stay long enough in that thermal to get properly centred before moving off again down to 1500 feet and starting to look for the next bit of lift .",4,0,0,0,0,1,0,0,0,0,VV,0
+16,26913,start,look," If you are aiming to go back for a landing , only stay long enough in that thermal to get properly centred before moving off again down to 1500 feet and starting to look for the next bit of lift .",4,0,0,0,0,1,1,0,0,0,VV,0
 17,27048,start,build," With all forms of exercise , it 's important to start slowly and build up gently .",5,0,0,1,0,0,1,0,0,0,VV,0
 17,27150,start,use," If you do not want a baby , but want your IUD removed , this is best done during a period , and you should immediately start using another method of contraception .",3,0,1,0,1,0,1,0,0,0,VVG,1
-17,27697,start,increase, Build up the time you spend in the sun slowly -- start with 10 minutes and increase gradually .,8,0,0,1,0,0,0,0,0,0,VV,0
+17,27697,start,increase, Build up the time you spend in the sun slowly -- start with 10 minutes and increase gradually .,8,0,0,1,0,0,1,0,0,0,VV,0
 17,27743,start,feel," But you 'll start feeling better quite soon ; a more balanced diet , a little more activity , and a positive attitude are all things that give you a sense of well being and vitality .",4,0,1,1,0,0,0,1,0,0,VVG,1
-17,28015,start,dry, The blisters will itch and then start to dry up forming crusts or scabs which will then disappear .,3,1,0,0,1,0,0,0,1,0,VV,0
+17,28015,start,dry, The blisters will itch and then start to dry up forming crusts or scabs which will then disappear .,3,0,0,0,1,0,0,0,1,0,VV,0
 17,28185,start,think," During this time the baby develops very quickly , so if you are planning to have a baby you should start thinking about your health a couple of months before hand .",5,0,0,0,0,1,1,0,0,0,VVG,1
 17,28860,start,plan, Starting to plan what I need -- who helps with this ?,4,0,0,1,0,0,1,0,0,0,VV,0
 18,30149,start,notice," There , an Inspector Fusco pleads for men to be returned to beat patrol from community projects , for these he realizes are "" an admirable aspiration , until one starts to notice that community involvement officers come to work to spend much of their time in track suits or jeans and tee shirts , and some grow longer hair and beards and mix with the locals "" .",6,0,0,1,0,0,1,0,0,0,VV,0
-18,30159,start,fall," Lieutenant Treadwell a figure of fun and contempt to the real cops after his hair started falling out in tufts , earned his way back into Commander Moss ' good graces by authoring that portion of the Los Angeles Police Department manual which reads",4,0,0,0,0,1,1,0,0,0,VVG,1
+18,30159,start,fall," Lieutenant Treadwell a figure of fun and contempt to the real cops after his hair started falling out in tufts , earned his way back into Commander Moss ' good graces by authoring that portion of the Los Angeles Police Department manual which reads",4,0,0,0,0,1,0,1,0,0,VVG,1
 18,30187,start,find," Initially we had to start from scratch to find out about drug use and drug users , for we were not even one-eyed kings in this land of the blind ; and we quickly found we were delving into a new and complex social world .",4,0,0,0,0,1,0,1,0,0,VV,0
 19,31993,start,think, I 've started thinking about you between times .,5,0,0,0,0,1,1,0,0,0,VVG,1
-19,31995,start,resent, And I 've suddenly started to resent those starry eyes of yours and your Lucy .,6,1,0,0,1,0,1,0,0,0,VV,0
+19,31995,start,resent, And I 've suddenly started to resent those starry eyes of yours and your Lucy .,6,0,0,0,1,0,1,0,0,0,VV,0
 19,32002,start,need," Yeah , she 'd started to need Dionne , pushed it aside since they were friends , and between friends you could take it for granted , since it was .",4,0,0,1,0,0,0,1,0,0,VV,0
-19,32691,hate,go," "" Look , Jay , "" she said , "" I hate to go and leave you in this state . """,2,0,0,1,0,0,0,1,0,0,VV,0
+19,32691,hate,go," "" Look , Jay , "" she said , "" I hate to go and leave you in this state . """,2,0,0,1,0,0,1,0,0,0,VV,0
 19,33461,start,scream, Then she got really mad and started screaming back at me .,6,0,0,0,0,1,0,1,0,0,VVG,1
-20,35553,start,swell, Finger injuries should be dealt with immediately before the damaged tissues start swelling .,5,0,0,1,0,0,0,1,0,0,VVG,1
+20,35553,start,swell, Finger injuries should be dealt with immediately before the damaged tissues start swelling .,5,0,0,1,0,0,1,0,0,0,VVG,1
 21,35898,start,clear, Allan Stewart was starting to clear away the mess of jugs and pots with a deliberate clatter .,5,0,1,0,1,0,0,1,0,0,VV,0
 21,36074,start,get, Faces turned as he came out and sleepy people started to get up from the low walls and boulders it the side of the road .,3,0,0,0,0,1,0,1,0,0,VV,0
 21,36146,start,snore," In the smithy house at Dull , Jean Bruce hail lain silently under the covers until her four little sisters and brothers had stopped fidgeting in the oppressive atmosphere and her parents had started to snore .",5,0,0,1,0,0,0,1,0,0,VV,0
@@ -141,13 +141,13 @@
 21,36483,start,carry," They went for him then , Alexander and Donald McLaggan , the Duke 's two sons , dragged him from his father 's side so that his head bounced on the steps , lifted him bleeding , like foresters keeping a dying deer clear of the hounds , and started to carry him down to the river "" just to cool him off "" but Cameron ran and gripped Donald 's shoulder and shouted , "" If you injure an officer it is treason on top of sedition , "" so they carried him back and laid him carefully at his father 's feet .",5,0,0,1,0,0,0,1,0,0,VV,0
 21,36559,start,rise," As the men at the windlass rope heaved and a long timber started to rise up and swing , the wheel on the pulley squealed like an injured dog and the man stationed at the top of the wall took a stickful of thick grease from a pot , leaned out , and worked it into the axle .",4,0,0,1,0,0,0,1,0,0,VV,0
 21,36640,start,pick," As Cameron started to pick out wood to finish the forward half of the roof , Iain said to him quietly , "" Sandy McGlashan is not the only man with troubles .",4,0,1,0,1,0,0,1,0,0,VV,0
-21,36720,start,review," By this time they were starting to review the situation steadily , forecasting the Duke of Atholl 's likely moves , wording formal requests for warrants to meet in larger groups , arguing furiously over the likelihood of being able to get weapons from the armouries at Atholl or Taymouth Castle .",6,1,0,0,1,0,0,0,0,0,VV,0
+21,36720,start,review," By this time they were starting to review the situation steadily , forecasting the Duke of Atholl 's likely moves , wording formal requests for warrants to meet in larger groups , arguing furiously over the likelihood of being able to get weapons from the armouries at Atholl or Taymouth Castle .",6,0,0,0,1,0,0,1,0,0,VV,0
 21,36918,start,bark," He started barking ,",4,0,0,1,0,0,0,1,0,0,VVG,1
 21,37322,start,answer," Menzies started to answer but Cameron put his hand on his arm , shook his head slightly , and said to Byers , "" I see the trouble .",6,0,0,1,0,0,0,1,0,0,VV,0
 21,37346,start,take, A frail safety-net had started to take shape .,4,0,1,0,1,0,0,1,0,0,VV,0
 21,37590,start,make," He had started out to make a rough count of the houses to be visited and then let his thoughts drift into a reverie of his own old home , the far tropical look of the mountain skyline beyond Loch Arkaig on the rare hot days .",4,0,1,0,1,0,0,1,0,0,VV,0
-22,39466,start,sit," Rosengarten recalls an afternoon when Leonard , sitting on the Faculty steps with his guitar , started to sing .",3,0,0,0,0,1,1,0,0,0,VVG,1
-22,39466,start,sing," Rosengarten recalls an afternoon when Leonard , sitting on the Faculty steps with his guitar , started to sing .",4,0,0,1,0,0,1,0,0,0,VV,0
+22,39466,start,sit," Rosengarten recalls an afternoon when Leonard , sitting on the Faculty steps with his guitar , started to sing .",3,0,0,0,0,1,0,1,0,0,VVG,1
+22,39466,start,sing," Rosengarten recalls an afternoon when Leonard , sitting on the Faculty steps with his guitar , started to sing .",4,0,0,1,0,0,0,1,0,0,VV,0
 22,39667,start,gain," Said his friend-cum-mentor , Irving Layton , in looking back over the period , "" I had a very sharp feeling in the early fifties that poetry in Canada had come in from the cold and was starting to gain momentum . """,4,0,1,0,1,0,0,1,0,0,VV,0
 23,41964,hate,leave," "" Hate to leave you with this bunch of weirdos .",5,0,0,0,0,1,1,0,0,0,VV,0
 23,42529,start,do," They would all chip in later , of course , but she was too shattered right now , they must all be too shattered right now , to start doing sums , working out who had eaten what and how much it had cost .",2,0,1,0,1,0,0,0,0,1,VVG,1
@@ -160,5 +160,5 @@
 26,46979,start,re-learning, Obviously I would have to start re-learning my past and re-discovering my appointed place in the world .,11,0,1,0,1,0,0,0,0,1,VVG,1
 26,47019,start,get," I started getting confused halfway through , but I was determined not to ask anyone else I did n't want another negative response to spoil the childlike happiness that the policeman 's courtesy had brought to my otherwise unrewarding day .",3,0,0,1,0,0,0,1,0,0,VVG,1
 26,47043,start,look, I decided to make one last attempt after which I would start looking for a place from where I could obtain a map of the city .,4,0,0,0,0,1,0,1,0,0,VVG,1
-27,47818,start,take," And that is before you start taking into consideration commercial endorsements and appearance money which , at a conservative guess must add at least another $30-40m .",4,1,0,0,1,0,1,0,0,0,VVG,1
+27,47818,start,take," And that is before you start taking into consideration commercial endorsements and appearance money which , at a conservative guess must add at least another $30-40m .",4,0,0,0,1,0,1,0,0,0,VVG,1
 27,47823,start,fear," He has only expressed what a lot of other people have been starting to fear for a long time , that unless the commercial manipulators in tennis are careful , they could cook the golden goose .",4,0,0,0,0,1,1,0,0,0,VV,0
