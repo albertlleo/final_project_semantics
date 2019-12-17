@@ -44,17 +44,34 @@ def token_type(token):
         return "word"
 pos_func = {}
 
+contextbefore = []
+
 def find_an(sent,text_id,s_id):
     '''Returns a list of tuples (adjective lemma, head noun lemma).'''
     olist = []
     for i in sent.nodelist:
         pos_func[i.POS] = i.func + " Parent=" + i.parent.POS
-
         #what is the difference between POS and parent.POS??
         if i.POS == 'VVG' or i.POS == "VV": #and i.func == 'ROOT': # TODO: begins with JJ (to account for comparatives+superlatives, with POS-tags=JJR, JJS)          
             if i.parent.lemma == 'start' or i.parent.lemma == 'hate':
-                if i.parent.index < i.index:
+                '''This step is to make sure that there is a 'to' before the inf'''
+                checktoinf = 0
+                if i.POS == 'VVG':
+                    checktoinf = 1
+                else:
+                    for num in range(int(i.parent.index), int(i.index)):
+                        if sent.nodelist[num].form == 'to':
+                            checktoinf = 1
+                '''If there is no 'to' between main verb and infinitive'''
+                '''The finding is invalid'''
+                if i.parent.index < i.index and checktoinf == 1:
                     write = [text_id, s_id]
+                    '''Feature:  Last mention'''
+                    lastmention = -1
+                    for number in range(len(contextbefore)):
+                        if contextbefore[number][0] == i.lemma:
+                            lastmention = s_id - contextbefore[number][1]
+                    '''Feature end'''
                     '''Feature: length of non-finite verb lemma'''
                     length = len(i.lemma)
                     '''Feature end'''
@@ -65,7 +82,7 @@ def find_an(sent,text_id,s_id):
                     for j in sent.nodelist:
                         if j.parent_index == i.index:
                             if re.match(r'J.*|N.*', j.POS):
-                                if j.index < i.index:
+                                if i.parent.index < j.index < i.index:
                                     befaft_bef = 1
                                 elif j.index > i.index:
                                     befaft_aft = 1
@@ -89,7 +106,7 @@ def find_an(sent,text_id,s_id):
                     '''Feature end'''
                     '''Feature: tense'''
                     tense = 'unknown'
-                    if i.parent.func == "ROOT":
+                    if re.match(r'VVD|VVP|VVZ', i.parent.POS) or i.parent.func == "ROOT":
                         if i.parent.POS == "VVD":
                             tense = "Past"
                         else:
@@ -115,6 +132,28 @@ def find_an(sent,text_id,s_id):
                                     tense = "Past"
                                 elif re.match(r'..P|..Z', word.POS):
                                     tense = "Present"
+                        if tense == 'unknown':
+                            '''When no ROOT verb is detected, find a finite verb instead'''
+                            for word in sent.nodelist:
+                                if re.match(r'V.D|V.P|V.Z|MD', word.POS):
+                                    if word.form == "will":
+                                        tense = "Future"
+                                    elif word.form == "would":
+                                        tense = "Conditional"
+                                    elif re.match(r"can|may|shall", word.form):
+                                        tense = "Present"
+                                    elif word.POS == "MD":
+                                        tense = "Past"
+                                    elif word.POS == "VBP" or word.POS == "VBZ":
+                                        for j in sent.nodelist:
+                                            if j.index == str(int(word.index) + 1) and j.form == "going":
+                                                tense = "Future"
+                                            else:
+                                                tense = "Present"
+                                    elif re.match(r'..D', word.POS):
+                                        tense = "Past"
+                                    elif re.match(r'..P|..Z', word.POS):
+                                        tense = "Present"
                     '''Turn into binary features: tense_pre, tense_pst, tense_fut, tense_cond'''
                     '''In case tense cannot be detected, all the values will be 0'''
                     tense_pre = 0
@@ -147,6 +186,7 @@ def find_an(sent,text_id,s_id):
                     write.append(i.lemma)
                     write.append(printsent)
                     write.append(length)
+                    write.append(lastmention)
                     write.append(befaft_bef)
                     write.append(befaft_aft)
                     write.append(argstr_NC)
@@ -162,6 +202,11 @@ def find_an(sent,text_id,s_id):
     #                tup = (i.lemma,featurecompposition)            
     #                olist.append(tup)
     #                print(write)
+        if len(contextbefore) < 400:
+                contextbefore.append([i.lemma, s_id])
+        else:
+            del contextbefore[0]
+            contextbefore.append([i.lemma, s_id])
     return olist
 
 #this function check if the node is in the list of tuples or not
@@ -188,7 +233,7 @@ def process_bnc_mod():
     i = 0
     s_id = 0
     within_sent = False
-    limit = 1000000#124529467 number of tokens in bnc.xml plus two
+    limit = 10000000#124529467 number of tokens in bnc.xml plus two
     #limit = 1000000
     bnc = open(home + 'bnc.xml', 'r', encoding = 'UTF-8', errors = 'ignore')
     while i < limit:
@@ -202,6 +247,8 @@ def process_bnc_mod():
         if token_type(line) == "textend": # text starts
             text_id += 1
             print(text_id)
+            global contextbefore
+            contextbefore = []            
         if token_type(line) == "sentencebegin": # count sentences
             if within_sent == True: # errors in the corpus coding...
                 pass
@@ -272,7 +319,7 @@ anlist = process_bnc_mod()
 #        of.write(info +"\n")
 
 #csv1_data = home + 'sample_data.csv'
-csv2_data = home + 'filtered.csv'
+csv2_data = home + 'sampletext.csv'
 #1-------------------------------------
 #pof.flush()
 #for lines in final_list:
