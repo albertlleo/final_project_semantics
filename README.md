@@ -1,5 +1,5 @@
 # final_project_semantics
-Latest update on the xtract_data_from_corpus-with4features.py:
+Latest update on the xtract-data-from-corpus_with4features.py:
 
 - Add lastmention feature. Defined as: the distance (in number of sentences) of last occurrence of the non-finite verb, searched from the beginning of current text, or, within 400 words.
 
