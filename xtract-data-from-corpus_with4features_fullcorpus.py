@@ -53,6 +53,8 @@ def token_type(token):
         return "word"
 pos_func = {}
 
+contextbefore = []
+
 def find_an(sent,text_id,s_id):
     '''Returns a list of tuples (adjective lemma, head noun lemma).'''
     olist = []
@@ -63,6 +65,12 @@ def find_an(sent,text_id,s_id):
         if i.POS == 'VVG' or i.POS == "VV": #and i.func == 'ROOT': # TODO: begins with JJ (to account for comparatives+superlatives, with POS-tags=JJR, JJS)          
             if i.parent.lemma == 'start' or i.parent.lemma == 'hate':
                 write = [text_id, s_id]
+                '''Feature:  Last mention'''
+                lastmention = -1
+                for number in range(len(contextbefore)):
+                    if contextbefore[number][0] == i.lemma:
+                        lastmention = s_id - contextbefore[number][1]
+                '''Feature end'''
                 '''Feature: length of non-finite verb lemma'''
                 length = len(i.lemma)
                 '''Feature end'''
@@ -73,11 +81,11 @@ def find_an(sent,text_id,s_id):
                 for j in sent.nodelist:
                     if j.parent_index == i.index:
                         if re.match(r'J.*|N.*', j.POS):
-                            if j.index < i.index:
+                            if int(i.parent.index) < int(j.index) < int(i.index):
                                 befaft_bef = 1
-                            elif j.index > i.index:
+                            elif int(j.index) > int(i.index):
                                 befaft_aft = 1
-                '''Feature end'''
+                '''Feature end'''  
                 '''Feature: Argument structure'''
                 '''As binary features: NC (No complement), NP (Noun phrase complement), PP (Preposition phrase complement)'''
                 argstr_NC = 0
@@ -144,11 +152,18 @@ def find_an(sent,text_id,s_id):
                 else:
                     targetform = 0
                 '''Now we got the target form'''
+                currentsent = []
+                '''A test function: print the sentence'''
+                for node in sent.nodelist:
+                    currentsent.append(node.form)
+                    printsent = ' '.join(currentsent)
                 '''Now write features into the csv file'''
 #                write = write2 + "," + i.parent.lemma + "," + i.POS + "," + i.lemma + "," + length + "," + befaft_bef + "," + befaft_aft + "," + argstr_NC + "," + argstr_NP + "," + argstr_PP + ","  + tense + "," + targetform
                 write.append(i.parent.lemma)
                 write.append(i.lemma)
+                write.append(printsent)
                 write.append(length)
+                write.append(lastmention)
                 write.append(befaft_bef)
                 write.append(befaft_aft)
                 write.append(argstr_NC)
@@ -164,6 +179,11 @@ def find_an(sent,text_id,s_id):
 #                tup = (i.lemma,featurecompposition)            
 #                olist.append(tup)
 #                print(write)
+        if len(contextbefore) < 400:
+                contextbefore.append([i.lemma, s_id])
+        else:
+            del contextbefore[0]
+            contextbefore.append([i.lemma, s_id])
     return olist
 
 
@@ -208,6 +228,8 @@ def process_bnc_mod():
             if token_type(line) == "textend": # text starts
                 text_id += 1
                 print(text_id)
+                global contextbefore
+                contextbefore = []
             if token_type(line) == "sentencebegin": # count sentences
                 if within_sent == True: # errors in the corpus coding...
                     pass
@@ -251,7 +273,7 @@ def process_bnc_mod():
 ### main ###
 
 ### global variables
-home = 'F:/学习（语言学）/计算语义学/Project/'
+home = 'C:/Users/U139446/Documents/final_project_semantics-master/'
 #dropbox = home + 'Dropbox/distsem/'
 #nounlistfile = dropbox + 'data/head_nouns/nounswithcolouradjs.txt'
 csvfile = home + 'output.csv'
