@@ -54,131 +54,190 @@ def token_type(token):
 pos_func = {}
 
 contextbefore = []
+counttoing = dict()
+verblist = ['start', 'begin', 'love', 'hate']
+for verb in verblist:
+    counttoing[verb] = [0, 0]
 
 def find_an(sent,text_id,s_id):
     '''Returns a list of tuples (adjective lemma, head noun lemma).'''
     olist = []
     for i in sent.nodelist:
         pos_func[i.POS] = i.func + " Parent=" + i.parent.POS
-
         #what is the difference between POS and parent.POS??
-        if i.POS == 'VVG' or i.POS == "VV": #and i.func == 'ROOT': # TODO: begins with JJ (to account for comparatives+superlatives, with POS-tags=JJR, JJS)          
-            if i.parent.lemma == 'start' or i.parent.lemma == 'hate':
-                write = [text_id, s_id]
-                '''Feature:  Last mention'''
-                lastmention = -1
-                for number in range(len(contextbefore)):
-                    if contextbefore[number][0] == i.lemma:
-                        lastmention = s_id - contextbefore[number][1]
-                '''Feature end'''
-                '''Feature: length of non-finite verb lemma'''
-                length = len(i.lemma)
-                '''Feature end'''
-                '''Feature: check whether there is a noun or adj before or after the non-finite verb'''
-                '''As binay features: befaft_bef, befaft_aft, both values can be 1 or 0'''
-                befaft_bef = 0
-                befaft_aft = 0
-                for j in sent.nodelist:
-                    if j.parent_index == i.index:
-                        if re.match(r'J.*|N.*', j.POS):
-                            if int(i.parent.index) < int(j.index) < int(i.index):
-                                befaft_bef = 1
-                            elif int(j.index) > int(i.index):
-                                befaft_aft = 1
-                '''Feature end'''  
-                '''Feature: Argument structure'''
-                '''As binary features: NC (No complement), NP (Noun phrase complement), PP (Preposition phrase complement)'''
-                argstr_NC = 0
-                argstr_NP = 0
-                argstr_PP = 0
-                for j in sent.nodelist:
-                    if j.parent_index == i.index:
-                        if re.match(r'N.*', j.POS):
-                            argstr_NP = 1
-                            argstr_PP = 0
-                            #In case a verb takes both NP and PP, NP always overwrite PP, regardless of their position
-                            #This can be rewrite later
-                        elif j.POS == 'IN' and argstr_NP == 0:
-                            argstr_PP = "1"
-                if argstr_NP == 0 and argstr_PP == 0:
-                    argstr_NC = 1
-                '''Feature end'''
-                '''Feature: tense'''
-                tense = 'unknown'
-                if i.parent.func == "ROOT":
-                    if i.parent.POS == "VVD":
-                        tense = "Past"
+        if i.POS == 'VVG' or i.POS == "VV":          
+            if i.parent.lemma in verblist:
+                '''This step is to make sure that there is a 'to' before the inf'''
+                checktoinf = 0
+                if i.POS == 'VVG':
+                    checktoinf = 1
+                else:
+                    for num in range(int(i.parent.index), int(i.index)):
+                        if sent.nodelist[num].form == 'to':
+                            checktoinf = 1
+                '''If there is no 'to' between main verb and infinitive'''
+                '''The finding is invalid'''
+                if i.parent.index < i.index and checktoinf == 1:
+                    write = [text_id, s_id]
+                    '''Feature:  Last mention'''
+                    lastmention = -1
+                    for number in range(len(contextbefore)):
+                        if contextbefore[number][0] == i.lemma:
+                            lastmention = s_id - contextbefore[number][1]
+                    '''Feature end'''
+                    '''Feature: length of non-finite verb lemma'''
+                    length = len(i.lemma)
+                    '''Feature end'''
+                    # '''Feature: check whether there is a noun or adj before or after the non-finite verb'''
+                    # '''As binay features: befaft_bef, befaft_aft, both values can be 1 or 0'''
+                    # befaft_bef = 0
+                    # befaft_aft = 0
+                    # for j in sent.nodelist:
+                    #     if j.parent_index == i.index:
+                    #         if re.match(r'J.*|N.*', j.POS):
+                    #             if int(i.parent.index) < int(j.index) < int(i.index):
+                    #                 befaft_bef = 1
+                    #             elif int(j.index) > int(i.index):
+                    #                 befaft_aft = 1
+                    # '''Feature end'''
+                    '''Feature: Argument structure'''
+                    '''As binary features: NC (No complement), NP (Noun phrase complement), PP (Preposition phrase complement)'''
+                    argstr_NC = 0
+                    argstr_NP = 0
+                    argstr_PP = 0
+                    for j in sent.nodelist:
+                        if j.parent_index == i.index:
+                            if re.match(r'N.*', j.POS):
+                                argstr_NP = 1
+                                argstr_PP = 0
+                                #In case a verb takes both NP and PP, NP always overwrite PP, regardless of their position
+                                #This can be rewrite later
+                            elif j.POS == 'IN' and argstr_NP == 0:
+                                argstr_PP = "1"
+                    if argstr_NP == 0 and argstr_PP == 0:
+                        argstr_NC = 1
+                    '''Feature end'''
+                    '''Feature: tense'''
+                    tense = 'unknown'
+                    if re.match(r'VVD|VVP|VVZ', i.parent.POS) or i.parent.func == "ROOT":
+                        if i.parent.POS == "VVD":
+                            tense = "Past"
+                        else:
+                            tense = "Present"
                     else:
-                        tense = "Present"
-                else:
-                    for word in sent.nodelist:
-                        if re.match(r'V.*|MD', word.POS) and word.func == 'ROOT':
-                            if word.form == "will":
-                                tense = "Future"
-                            elif word.form == "would":
-                                tense = "Conditional"
-                            elif re.match(r"can|may|shall", word.form):
-                                tense = "Present"
-                            elif word.POS == "MD":
-                                tense = "Past"
-                            elif word.POS == "VBP" or word.POS == "VBZ":
-                                for j in sent.nodelist:
-                                    if j.index == str(int(word.index) + 1) and j.form == "going":
+                        for word in sent.nodelist:
+                            if re.match(r'V.*|MD', word.POS) and word.func == 'ROOT':
+                                if word.form == "will":
+                                    tense = "Future"
+                                elif word.form == "would":
+                                    tense = "Conditional"
+                                elif re.match(r"can|may|shall", word.form):
+                                    tense = "Present"
+                                elif word.POS == "MD":
+                                    tense = "Past"
+                                elif word.POS == "VBP" or word.POS == "VBZ":
+                                    for j in sent.nodelist:
+                                        if j.index == str(int(word.index) + 1) and j.form == "going":
+                                            tense = "Future"
+                                        else:
+                                            tense = "Present"
+                                elif re.match(r'..D', word.POS):
+                                    tense = "Past"
+                                elif re.match(r'..P|..Z', word.POS):
+                                    tense = "Present"
+                        if tense == 'unknown':
+                            '''When no ROOT verb is detected, find a finite verb instead'''
+                            for word in sent.nodelist:
+                                if re.match(r'V.D|V.P|V.Z|MD', word.POS):
+                                    if word.form == "will":
                                         tense = "Future"
-                                    else:
+                                    elif word.form == "would":
+                                        tense = "Conditional"
+                                    elif re.match(r"can|may|shall", word.form):
                                         tense = "Present"
-                            elif re.match(r'..D', word.POS):
-                                tense = "Past"
-                            elif re.match(r'..P|..Z', word.POS):
-                                tense = "Present"
-                '''Turn into binary features: tense_pre, tense_pst, tense_fut, tense_cond'''
-                '''In case tense cannot be detected, all the values will be 0'''
-                tense_pre = 0
-                tense_pst = 0
-                tense_fut = 0
-                tense_cond = 0
-                if tense == 'Present':
-                    tense_pre = 1
-                elif tense == 'Past':
-                    tense_pst = 1
-                elif tense == 'Future':
-                    tense_fut = 1
-                elif tense == 'Conditional':
-                    tense_cond = 1
-                '''Feature end'''
-                '''Get target form (I have combined the ifs for VVG and VV)'''
-                if i.POS == "VVG":
-                    targetform = 1
-                else:
-                    targetform = 0
-                '''Now we got the target form'''
-                currentsent = []
-                '''A test function: print the sentence'''
-                for node in sent.nodelist:
-                    currentsent.append(node.form)
-                    printsent = ' '.join(currentsent)
-                '''Now write features into the csv file'''
-#                write = write2 + "," + i.parent.lemma + "," + i.POS + "," + i.lemma + "," + length + "," + befaft_bef + "," + befaft_aft + "," + argstr_NC + "," + argstr_NP + "," + argstr_PP + ","  + tense + "," + targetform
-                write.append(i.parent.lemma)
-                write.append(i.lemma)
-                write.append(printsent)
-                write.append(length)
-                write.append(lastmention)
-                write.append(befaft_bef)
-                write.append(befaft_aft)
-                write.append(argstr_NC)
-                write.append(argstr_NP)
-                write.append(argstr_PP)
-                write.append(tense_pre)
-                write.append(tense_pst)
-                write.append(tense_fut)
-                write.append(tense_cond)
-                write.append(i.POS)
-                write.append(targetform)
-                filter1.append(write)
-#                tup = (i.lemma,featurecompposition)            
-#                olist.append(tup)
-#                print(write)
+                                    elif word.POS == "MD":
+                                        tense = "Past"
+                                    elif word.POS == "VBP" or word.POS == "VBZ":
+                                        for j in sent.nodelist:
+                                            if j.index == str(int(word.index) + 1) and j.form == "going":
+                                                tense = "Future"
+                                            else:
+                                                tense = "Present"
+                                    elif re.match(r'..D', word.POS):
+                                        tense = "Past"
+                                    elif re.match(r'..P|..Z', word.POS):
+                                        tense = "Present"
+                    '''Turn into binary features: tense_pre, tense_pst, tense_fut, tense_cond'''
+                    '''In case tense cannot be detected, all the values will be 0'''
+                    tense_pre = 0
+                    tense_pst = 0
+                    tense_fut = 0
+                    tense_cond = 0
+                    if tense == 'Present':
+                        tense_pre = 1
+                    elif tense == 'Past':
+                        tense_pst = 1
+                    elif tense == 'Future':
+                        tense_fut = 1
+                    elif tense == 'Conditional':
+                        tense_cond = 1
+                    '''Feature end'''
+                    '''Get target form (I have combined the ifs for VVG and VV)'''
+                    if i.POS == "VVG":
+                        targetform = 1
+                    else:
+                        targetform = 0
+                    '''Now we got the target form'''
+                    '''Now write features into the csv file'''
+    #                write = write2 + "," + i.parent.lemma + "," + i.POS + "," + i.lemma + "," + length + "," + befaft_bef + "," + befaft_aft + "," + argstr_NC + "," + argstr_NP + "," + argstr_PP + ","  + tense + "," + targetform
+                    currentsent = []
+                    '''A test function: print the sentence'''
+                    for node in sent.nodelist:
+                        currentsent.append(node.form)
+                        printsent = ' '.join(currentsent)
+                    '''A feature for i's parent'''
+                    parentlist = [0, 0, 0, 0]
+                    if i.parent.lemma == 'start':
+                        parentlist[0] = 1
+                    elif i.parent.lemma == 'begin':
+                        parentlist[1] = 1
+                    elif i.parent.lemma == 'love':   
+                        parentlist[2] = 1
+                    elif i.parent.lemma == 'hate':
+                        parentlist[3] = 1
+                    '''A counting function: only if there is a balanced num of ing and to
+                    do I write the results'''
+                    writejudge = 0
+                    if i.POS == 'VV':
+                        if counttoing[i.parent.lemma][0] <= counttoing[i.parent.lemma][1]+100:
+                            counttoing[i.parent.lemma][0] += 1
+                            writejudge = 1
+                    else:
+                        if counttoing[i.parent.lemma][1] <= counttoing[i.parent.lemma][0]+100:
+                            counttoing[i.parent.lemma][1] += 1
+                            writejudge = 1
+                    if writejudge == 1:
+                        write.append(i.parent.lemma)
+                        write.append(i.lemma)
+                        write.append(printsent)
+                        write.append(length)
+                        write.append(lastmention)
+                        # write.append(befaft_bef)
+                        # write.append(befaft_aft)
+                        write += parentlist
+                        write.append(argstr_NC)
+                        write.append(argstr_NP)
+                        write.append(argstr_PP)
+                        write.append(tense_pre)
+                        write.append(tense_pst)
+                        write.append(tense_fut)
+                        write.append(tense_cond)
+                        write.append(i.POS)
+                        write.append(targetform)
+                        filter1.append(write)
+    #                tup = (i.lemma,featurecompposition)            
+    #                olist.append(tup)
+    #                print(write)
         if len(contextbefore) < 400:
                 contextbefore.append([i.lemma, s_id])
         else:
@@ -188,23 +247,23 @@ def find_an(sent,text_id,s_id):
 
 
 #this function check if the node is in the list of tuples or not
-def isNodeInList(n):
-    for p in listTup:
-        if p.getTup() == n:
-            return listTup.index(p)
-    return -1
+# def isNodeInList(n):
+#     for p in listTup:
+#         if p.getTup() == n:
+#             return listTup.index(p)
+#     return -1
 
 #check the current list of lemmas
 # if lemma is in the list, adds 1 to the number of occurrences
 #otherwise it adds the lemma in the list (with #occurences == 1)
-def checkList(act):
-    num = isNodeInList(act)
-    if num > -1:
-        listTup[num].add1()
-        #print(listTup[num].tup[0]+ "-" +  listTup[num].tup[1] + " has been found " + str(listTup[num].getNum()) + " times")
-    else:
-        listTup.append(Pair(act))
-        #print(listTup[num].tup[0]+ "-" +  listTup[num].tup[1] + " has been found for the first time")
+# def checkList(act):
+#     num = isNodeInList(act)
+#     if num > -1:
+#         listTup[num].add1()
+#         #print(listTup[num].tup[0]+ "-" +  listTup[num].tup[1] + " has been found " + str(listTup[num].getNum()) + " times")
+#     else:
+#         listTup.append(Pair(act))
+#         #print(listTup[num].tup[0]+ "-" +  listTup[num].tup[1] + " has been found for the first time")
 
 def process_bnc_mod():
     text_id = 0
@@ -246,9 +305,9 @@ def process_bnc_mod():
                     sys.stderr.write(msg)
                 anlist = find_an(newsent,text_id,s_id)
                 
-                for tupla in anlist:
-                    checkList(tupla)
-                del(newsent)
+                # for tupla in anlist:
+                #     checkList(tupla)
+                # del(newsent)
             elif token_type(line) == "word":
                 itemlist = line.split()
                 yield_lines(itemlist)
@@ -273,7 +332,7 @@ def process_bnc_mod():
 ### main ###
 
 ### global variables
-home = 'C:/Users/U139446/Documents/final_project_semantics-master/'
+home = 'F:/学习（语言学）/计算语义学/Project/'
 #dropbox = home + 'Dropbox/distsem/'
 #nounlistfile = dropbox + 'data/head_nouns/nounswithcolouradjs.txt'
 csvfile = home + 'output.csv'
@@ -288,21 +347,21 @@ print("[Begin]")
 print("Let's start...")
 anlist = process_bnc_mod()
 
-of = open(csvfile, 'w')
-of.flush()
-text = "Adj;Noun;Occurrences\n"
-of.write(text)
-#for i,line in enumerate(lines):
-   # if i < 2: continue
-    #foo(line)
-for el in listTup:
-    if(el.getNum() >= minfreq):
-       #tam sayıyı aldırma => str(el)[-2:]
-        #print(str(el) + " appears " + str(el).split(";")[1] + " times(min frequency=", minfreq,")it's added to the output list")
-        info = str(el)
-        of.write(info +"\n")
+# of = open(csvfile, 'w')
+# of.flush()
+# text = "Adj;Noun;Occurrences\n"
+# of.write(text)
+# #for i,line in enumerate(lines):
+#    # if i < 2: continue
+#     #foo(line)
+# for el in listTup:
+#     if(el.getNum() >= minfreq):
+#        #tam sayıyı aldırma => str(el)[-2:]
+#         #print(str(el) + " appears " + str(el).split(";")[1] + " times(min frequency=", minfreq,")it's added to the output list")
+#         info = str(el)
+#         of.write(info +"\n")
 
-csv1_data = home + 'sample_data.csv'
+# csv1_data = home + 'sample_data.csv'
 #1-------------------------------------
 #pof.flush()
 #for lines in final_list:
@@ -313,8 +372,8 @@ csv1_data = home + 'sample_data.csv'
 #    pof.close()
 
 #2-------------------------------------
-df = pd.DataFrame(final_list)
-df.to_csv(csv1_data, sep=',',index=False)
+# df = pd.DataFrame(final_list)
+# df.to_csv(csv1_data, sep=',',index=False)
 
 #df2 = pd.DataFrame(filter1)
 #df2.to_csv(csv2_data, sep=',',index=False)
@@ -325,7 +384,7 @@ df.to_csv(csv1_data, sep=',',index=False)
 
 b = datetime.now()
 
-of.close()
+# of.close()
 print("Process finished!")
 c = b - a
 print("Time spent (sec):" + str(c.seconds))
